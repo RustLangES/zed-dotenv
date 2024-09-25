@@ -1,0 +1,47 @@
+name: Checks
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "src/**/**.rs"
+  push:
+    branches:
+      - main
+      - dev
+    paths:
+      - "src/**/**.rs"
+
+jobs:
+  check-fmt:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - name: checks
+        run: |
+          cargo fmt --all --check
+
+  check-clippy:
+    needs: [check-fmt]
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - name: cargo check
+        run: |
+          cargo clippy -- -D warnings
+
+  check-tests:
+    needs: [check-clippy]
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - name: cargo check
+        run: |
+          cargo test

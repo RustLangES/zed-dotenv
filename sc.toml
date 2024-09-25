@@ -1,0 +1,21 @@
+# It can help you to commit correctly
+# https://github.com/romancitodev/simple-commits
+[git]
+skip_emojis = true
+skip_preview = false
+
+[[scopes]]
+name = "lang"
+description = "Language support"
+
+[[scopes]]
+name = "lsp"
+description = "lsp related"
+
+[[scopes]]
+name = "grammar"
+description = "Grammar scheme related"
+
+[[scopes]]
+name = "tree-sitter"
+description = "TreeSitter related"

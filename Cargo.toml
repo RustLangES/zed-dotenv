@@ -1,0 +1,14 @@
+[package]
+name = "zed-dotenv"
+version = "0.0.1"
+authors = ["Sergio Ribera <56278796+SergioRibera@users.noreply.github.com>"]
+edition = "2021"
+publish = false
+license = "MIT OR Apache-2.0"
+
+[lib]
+path = "src/dotenv-lsp.rs"
+crate-type = ["cdylib"]
+
+[dependencies]
+zed_extension_api = "0.1"

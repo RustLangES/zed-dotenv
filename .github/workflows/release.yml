@@ -1,0 +1,49 @@
+name: Release Version
+
+permissions:
+  contents: write
+
+on:
+  workflow_dispatch:
+  push:
+    paths-ignore:
+      - "release.toml"
+      - "LICENS**"
+      - "README.md"
+    tags:
+      - "**"
+
+jobs:
+  publish:
+    id: changelog
+    name: Publish Changelog
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate a Changelog
+        uses: orhun/git-cliff-action@v3
+        id: git-cliff
+        with:
+          args: -vv --latest
+        env:
+          OUTPUT: CHANGES.md
+          GITHUB_REPO: ${{ github.repository }}
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          prerelease: ${{ contains(github.ref_name, 'a') }}
+          body: ${{ steps.git-cliff.outputs.content }}
+
+  release-extension:
+    name: Release Zed Extension
+    needs: [changelog]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: huacnlee/zed-extension-action@v1
+        with:
+          extension-name: zed-dotenv
+          push-to: RustLangES/extensions
+        env:
+          # the personal access token should have "repo" & "workflow" scopes
+          COMMITTER_TOKEN: ${{ secrets.COMMITTER_TOKEN }}

@@ -1,0 +1,15 @@
+id = "zed-dotenv"
+name = "zed-dotenv"
+version = "0.0.1"
+schema_version = 1
+authors = ["RustLangES <contact@rustlang-es.org>", "Sergio Ribera <56278796+SergioRibera@users.noreply.github.com>"]
+description = "Load the system environment variables, your local files, edit your .env files and much more."
+repository = "https://github.com/RustLangES/zed-dotenv"
+
+[language_servers.dotenv-lsp]
+name = "dotenv-lsp"
+language = "envfile"
+
+[grammars.env]
+repository = "https://github.com/zarifpour/tree-sitter-dotenv"
+commit = "a854096808a5c1da0de998b31e5887995a98a89f"
