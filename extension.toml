@@ -8,7 +8,14 @@ repository = "https://github.com/RustLangES/zed-dotenv"
 
 [language_servers.dotenv-lsp]
 name = "dotenv-lsp"
-language = "envfile"
+languages = [
+    "Python",
+    "Shell Script",
+    "env",
+    "ini",
+    "Rust",
+    "JavaScript"
+]
 
 [grammars.env]
 repository = "https://github.com/zarifpour/tree-sitter-dotenv"
