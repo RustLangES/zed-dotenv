@@ -1,0 +1,12 @@
+[package]
+name = "dotenv-lsp"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+dashmap = "6.1.0"
+tower-lsp = "0.20.0"
+serde_json = { version = "1", features = ["std"] }
+tokio = { version = "1.37", default-features = false, features = ["rt-multi-thread", "io-std", "macros"] }
+serde = { version = "1.0.210", features = ["derive"] }
+regex = "1.10.6"

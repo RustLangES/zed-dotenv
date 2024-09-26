@@ -10,5 +10,8 @@ license = "MIT OR Apache-2.0"
 path = "src/dotenv-lsp.rs"
 crate-type = ["cdylib"]
 
+[workspace]
+members = ["lsp"]
+
 [dependencies]
 zed_extension_api = "0.1"
