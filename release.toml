@@ -1,4 +1,4 @@
 allow-branch = ["main", "dev", "!HEAD"]
 publish = false
 pre-release-commit-message = "chore: Release new version"
-tag-name = "{{version}}"
+tag-name = "{{crate_name}}-v{{version}}"
