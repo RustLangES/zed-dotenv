@@ -1,0 +1,26 @@
+name: Release Plugin into Zed Store
+
+on:
+  # Defining workflow_call means that this workflow can be called from
+  # your main workflow job
+  workflow_call:
+    # cargo-dist exposes the plan from the plan step, as a JSON string,
+    # to your job if it needs it
+    inputs:
+      plan:
+        required: true
+        type: string
+
+jobs:
+  publish-extension:
+    name: Release Zed Extension
+    runs-on: ubuntu-latest
+    if: ${{ inputs.plan && fromJson(inputs.plan).announcement_is_prerelease != false }}
+    steps:
+      - uses: huacnlee/zed-extension-action@v1
+        with:
+          extension-name: dotenv-zed
+          push-to: RustLangES/zed-extensions
+        env:
+          # the personal access token should have "repo" & "workflow" scopes
+          COMMITTER_TOKEN: ${{ secrets.ZED_PLUGIN_COMMITTER_TOKEN }}
