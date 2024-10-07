@@ -111,7 +111,7 @@ impl zed::Extension for DotEnvEntension {
         Ok(zed::Command {
             command: self.language_server_binary_path(language_server_id, worktree)?,
             args: vec!["--stdio".to_string()],
-            env: Default::default(),
+            env: worktree.shell_env(),
         })
     }
 }
