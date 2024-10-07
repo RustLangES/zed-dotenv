@@ -1,5 +1,5 @@
 id = "zed-dotenv"
-name = "zed-dotenv"
+name = "DotEnv"
 version = "0.0.1"
 schema_version = 1
 authors = ["RustLangES <contact@rustlang-es.org>", "Sergio Ribera <56278796+SergioRibera@users.noreply.github.com>"]
