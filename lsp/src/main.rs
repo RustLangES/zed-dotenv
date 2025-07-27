@@ -13,9 +13,10 @@ mod utils;
 /// Env_Name => (Content, Docs)
 pub type Dotenv = DashMap<String, (String, Option<String>)>;
 
-#[derive(Clone, Debug, Deserialize)]
+#[derive(Clone, Debug, Default, Deserialize, PartialEq, Eq)]
 enum DotenvLoadOrder {
     Asc,
+    #[default]
     Desc,
 }
 
@@ -40,8 +41,8 @@ impl Default for Config {
             show_documentation: true,
             show_content_on_docs: true,
             documentation_kind: Some(MarkupKind::Markdown),
-            dotenv_environment: ".*".to_owned(),
-            load_order: DotenvLoadOrder::Desc,
+            dotenv_environment: "\\.env.*".to_owned(),
+            load_order: Default::default(),
         }
     }
 }
@@ -88,7 +89,8 @@ impl Backend {
                 .is_match(v.file_name().unwrap().to_str().unwrap())
                 .then_some(v)
         }) {
-            let files = walkdir::WalkDir::new(workdir)
+            let mut files = walkdir::WalkDir::new(workdir)
+                .sort_by_file_name()
                 .into_iter()
                 .filter_map(|e| {
                     if e.as_ref().is_ok_and(|f| {
@@ -100,6 +102,11 @@ impl Backend {
                     }
                 })
                 .collect::<Vec<_>>();
+
+            if configs.load_order == DotenvLoadOrder::Asc {
+                files.reverse();
+            }
+
             for entry in files {
                 let path = entry.path();
                 self.client
